@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="805.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.drw.desktop.Controller">
+    <children>
+        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Campaign Title #1" />
+                                        <SeparatorMenuItem mnemonicParsing="false" />
+                                        <MenuItem mnemonicParsing="false" text="Clear" />
+                                    </items>
+                                </Menu>
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
+                                <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="Save As..." />
+                                <MenuItem fx:id="revertMenuItem" mnemonicParsing="false" text="Revert To Saved" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem fx:id="preferencesMenuItem" mnemonicParsing="false" text="Preferences" />
+                                <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Mode">
+                            <items>
+                                <MenuItem fx:id="editorMenuItem" mnemonicParsing="false" text="Editor" />
+                                <MenuItem fx:id="sessionMenuItem" mnemonicParsing="false" text="Session" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <AnchorPane fx:id="editorAnchorPane" prefHeight="200.0" prefWidth="200.0">
+                            <children>
+                                <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <left>
+                                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                            <children>
+                                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <VBox>
+                                                            <children>
+                                                                <Label text="Campaigns" />
+                                                                <TreeView fx:id="campaignsTreeView" prefHeight="200.0" prefWidth="200.0" showRoot="false" VBox.vgrow="ALWAYS" />
+                                                            </children>
+                                                        </VBox>
+                                                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                            <children>
+                                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                    <children>
+                                                                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                            <children>
+                                                                                <Label text="Campaign Editor" />
+                                                                                <GridPane>
+                                                                                    <columnConstraints>
+                                                                                        <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.0" />
+                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                    </columnConstraints>
+                                                                                    <rowConstraints>
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    </rowConstraints>
+                                                                                    <children>
+                                                                                        <Label text="Title" />
+                                                                                        <TextField fx:id="campaignTitleTextField" GridPane.columnIndex="1" />
+                                                                                    </children>
+                                                                                </GridPane>
+                                                                            </children>
+                                                                        </VBox>
+                                                                    </children>
+                                                                </AnchorPane>
+                                                            </children>
+                                                        </StackPane>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </left>
+                                    <top>
+                                        <Label text="Editor" BorderPane.alignment="CENTER_LEFT" />
+                                    </top>
+                                </BorderPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="sessionAnchorPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                            <children>
+                                <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <right>
+                                        <AnchorPane minWidth="-Infinity" prefWidth="250.0" BorderPane.alignment="CENTER">
+                                            <children>
+                                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <GridPane vgap="5.0" GridPane.rowIndex="1">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints minWidth="10.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <Label text="Chat" />
+                                                                <TextArea fx:id="chatDisplayTextArea" editable="false" wrapText="true" GridPane.rowIndex="1" />
+                                                                <TextArea fx:id="chatInputTextArea" prefRowCount="3" wrapText="true" GridPane.rowIndex="2" />
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                            </padding>
+                                                        </GridPane>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </right>
+                                    <center>
+                                        <AnchorPane BorderPane.alignment="CENTER">
+                                            <children>
+                                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                                            <content>
+                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="1000.0">
+                                                                    <children>
+                                                                        <Pane layoutX="357.0" layoutY="339.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222;" />
+                                                                    </children>
+                                                                </AnchorPane>
+                                                            </content>
+                                                        </ScrollPane>
+                                                        <HBox minHeight="-Infinity" prefHeight="100.0" GridPane.rowIndex="1">
+                                                            <children>
+                                                                <MediaView fitHeight="100.0" fitWidth="100.0" />
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </center>
+                                    <top>
+                                        <Label text="Session" BorderPane.alignment="CENTER_LEFT" />
+                                    </top>
+                                </BorderPane>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </StackPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
