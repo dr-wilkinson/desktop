@@ -16,6 +16,10 @@
  */
 package io.github.drw.desktop.eventbus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Implements the @{link Event} interface.
  *
@@ -27,6 +31,9 @@ public class AbstractEvent implements Event {
     private boolean consumed = false;
     private final Object object;
     private final Object source;
+
+    private List<Listener> listeners = new ArrayList<>();
+    private Object consumer;
 
     /**
      * Constructs an abstract event.
@@ -62,8 +69,24 @@ public class AbstractEvent implements Event {
     }
 
     @Override
-    public void consume() {
+    public void consume(Object consumer) {
+        this.consumer = consumer;
         consumed = true;
+    }
+
+    @Override
+    public Object getConsumer() {
+        return consumer;
+    }
+
+    @Override
+    public void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    @Override
+    public List<Listener> getListeners() {
+        return Collections.unmodifiableList(listeners);
     }
 
 }

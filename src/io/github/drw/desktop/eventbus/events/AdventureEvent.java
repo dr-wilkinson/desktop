@@ -1,5 +1,5 @@
 /*
- * CharacterEvent.java
+ * AdventureEvent.java
  *
  * Copyright (c) 2018 dr wilkinson <dr-wilkinson@users.noreply.github.com>.
  *
@@ -25,19 +25,19 @@ import io.github.drw.desktop.eventbus.Event;
 
 /**
  * This class of {@link Event} is fired by objects that manipulate
- * {@link Campaign} objects.
+ * {@link Adventure} objects.
  *
  * @author dr wilkinson <dr-wilkinson@users.noreply.github.com>
  */
-public class CampaignEvent extends AbstractEvent implements Event {
+public class AdventureEvent extends AbstractEvent implements Event {
 
     public enum Type {
 
-        Open, Save;
+        New, Open, Save;
 
     }
 
-    public CampaignEvent(final Type type, final Object source, final Object object) {
+    public AdventureEvent(final Type type, final Object source, final Object object) {
         super(type, source, object);
     }
 

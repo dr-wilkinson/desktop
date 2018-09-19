@@ -19,7 +19,7 @@ package io.github.drw.desktop;
 import io.github.drw.desktop.eventbus.Event;
 import io.github.drw.desktop.eventbus.Eventbus;
 import io.github.drw.desktop.eventbus.Listener;
-import io.github.drw.desktop.eventbus.events.CloseApplication;
+import io.github.drw.desktop.eventbus.events.ApplicationEvent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,14 +32,15 @@ import javafx.stage.WindowEvent;
  *
  * @author dr wilkinson <dr-wilkinson@users.noreply.github.com>
  */
-public class Desktop extends Application implements Listener {
+public class DesktopApplication extends Application implements Listener {
 
     public static Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
         Eventbus.getInstance().add(this);
-        Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
+        Eventbus.toggleReporting();
+        Parent root = FXMLLoader.load(getClass().getResource("DesktopView.fxml"));
         Scene scene = new Scene(root);
         this.stage = stage;
         stage.setScene(scene);
@@ -61,9 +62,12 @@ public class Desktop extends Application implements Listener {
 
     @Override
     public Event handle(Event event) {
-        if (event instanceof CloseApplication) {
-            stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-            event.consume();
+        if (event instanceof ApplicationEvent) {
+            event.addListener(this);
+            if (event.getType().equals(ApplicationEvent.Type.Quit)) {
+                stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                event.consume(this);
+            }
         }
         return event;
     }

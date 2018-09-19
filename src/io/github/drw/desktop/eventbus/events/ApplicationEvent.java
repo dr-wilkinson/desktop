@@ -1,5 +1,5 @@
 /*
- * CharacterEvent.java
+ * ApplicationEvent.java
  *
  * Copyright (c) 2018 dr wilkinson <dr-wilkinson@users.noreply.github.com>.
  *
@@ -29,15 +29,15 @@ import io.github.drw.desktop.eventbus.Event;
  *
  * @author dr wilkinson <dr-wilkinson@users.noreply.github.com>
  */
-public class CampaignEvent extends AbstractEvent implements Event {
+public class ApplicationEvent extends AbstractEvent implements Event {
 
     public enum Type {
 
-        Open, Save;
+        Quit;
 
     }
 
-    public CampaignEvent(final Type type, final Object source, final Object object) {
+    public ApplicationEvent(final Type type, final Object source, final Object object) {
         super(type, source, object);
     }
 

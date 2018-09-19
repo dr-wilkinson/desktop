@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class Eventbus {
 
+    private static boolean reporting;
     private static Eventbus eventbus;
     private static List<Listener> listeners;
 
@@ -46,6 +47,13 @@ public class Eventbus {
     }
 
     /**
+     * Toggles the reporting state of the Eventbus.
+     */
+    public static void toggleReporting() {
+        reporting = !reporting;
+    }
+
+    /**
      * Fires the supplied {@link Event} off to all {@link Listener}s.
      *
      * @param event The Event to fire.
@@ -55,7 +63,16 @@ public class Eventbus {
             for (Listener listener : listeners) {
                 event = listener.handle(event);
                 if (event.isConsumed()) {
+                    if (reporting) {
+                        report(event);
+                    }
                     break;
+                }
+            }
+            if (!event.isConsumed()) {
+                event.consume(Eventbus.getInstance());
+                if (reporting) {
+                    report(event);
                 }
             }
             event = null;
@@ -90,6 +107,23 @@ public class Eventbus {
         } else {
             throw new IllegalArgumentException("Cannot remove a null listener!");
         }
+    }
+
+    private static void report(Event event) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(event.hashCode()).append(" ").append(event.getClass().getSimpleName()).append(".").append(event.getType()).append(System.lineSeparator());
+        if (event.getObject() != null) {
+            sb.append("Carrying ").append(event.getObject().getClass().getSimpleName()).append(System.lineSeparator());
+        }
+        sb.append("Fired by ").append(event.getSource().getClass().getSimpleName()).append(System.lineSeparator());
+        sb.append("Handled by: ").append(System.lineSeparator());
+        for (Listener listener : event.getListeners()) {
+            sb.append(listener.getClass().getSimpleName()).append(System.lineSeparator());
+        }
+        if (event.isConsumed()) {
+            sb.append("Consumed by ").append(event.getConsumer().getClass().getSimpleName()).append(System.lineSeparator());
+        }
+        System.out.println(sb.toString());
     }
 
 }

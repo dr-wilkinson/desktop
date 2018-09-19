@@ -52,7 +52,7 @@ public class Clock implements Listener {
             if (event instanceof LoadAdventure) {
                 if (event.getObject() instanceof Adventure) {
                     now = ((Adventure) event.getObject()).getInstant();
-                    event.consume();
+                    event.consume(this);
                     Eventbus.fire(new ClockUpdate(this, now.clone()));
                     return event;
                 }

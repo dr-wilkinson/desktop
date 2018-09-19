@@ -16,6 +16,8 @@
  */
 package io.github.drw.desktop.eventbus;
 
+import java.util.List;
+
 /**
  * The public contract for all events.
  *
@@ -54,6 +56,27 @@ public interface Event {
     /**
      * Consume this Event.
      */
-    public void consume();
+    public void consume(Object consumer);
+
+    /**
+     * Returns the {@link Object} that consumed this Event.
+     *
+     * @return The consumer.
+     */
+    public Object getConsumer();
+
+    /**
+     * Adds any {@link Listener} that is listening for this type of Event.
+     *
+     * @param listener The listening object.
+     */
+    public void addListener(Listener listener);
+
+    /**
+     * Returns a {@link List} of all objects that have listened to this Event.
+     *
+     * @return All objects that have listened to this Event.
+     */
+    public List<Listener> getListeners();
 
 }

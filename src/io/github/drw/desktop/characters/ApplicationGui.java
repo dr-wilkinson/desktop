@@ -46,8 +46,9 @@ public class ApplicationGui extends Application implements Listener {
     @Override
     public Event handle(Event event) {
         if (event instanceof CloseApplication) {
+            event.addListener(this);
             stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-            event.consume();
+            event.consume(this);
         }
         return event;
     }
