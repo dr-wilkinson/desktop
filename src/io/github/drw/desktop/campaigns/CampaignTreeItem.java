@@ -31,13 +31,21 @@ import javafx.scene.control.SeparatorMenuItem;
  */
 public class CampaignTreeItem<String> extends AbstractTreeItem {
 
-    public CampaignTreeItem(String title) {
-        setValue(title);
+    public CampaignTreeItem(String nameTitle) {
+        setValue(nameTitle);
     }
 
     @Override
     public ContextMenu getContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
+        MenuItem renameMenuItem = new MenuItem("Rename");
+        renameMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Eventbus.fire(new CampaignEvent(CampaignEvent.Type.Rename, CampaignTreeItem.this, null));
+            }
+        });
+        contextMenu.getItems().add(renameMenuItem);
         MenuItem saveMenuItem = new MenuItem("Save");
         saveMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override

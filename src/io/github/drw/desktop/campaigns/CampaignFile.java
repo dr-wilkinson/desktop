@@ -29,7 +29,7 @@ import java.io.File;
  */
 public class CampaignFile {
 
-    private String nameTitle = "Untitled";
+    private String nameTitle = "";
     private boolean saved = false;
     private Campaign campaign = null;
     private File file = null;
@@ -38,8 +38,12 @@ public class CampaignFile {
         return nameTitle;
     }
 
-    public void setNameTitle(String nameTitle) {
-        this.nameTitle = nameTitle;
+    public void syncNameTitle() {
+        if (file == null) {
+            nameTitle = campaign.getTitle();
+        } else {
+            nameTitle = file.getName().replace(".cpn", "");
+        }
     }
 
     public boolean isSaved() {

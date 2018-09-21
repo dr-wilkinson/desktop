@@ -16,6 +16,7 @@
  */
 package io.github.drw.desktop.campaigns;
 
+import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 
 /**
@@ -23,19 +24,33 @@ import javafx.scene.control.TreeCell;
  *
  * @author dr wilkinson <dr-wilkinson@users.noreply.github.com>
  */
-public class CustomTreeCell<String> extends TreeCell<String> {
+public class CustomTreeCell extends TreeCell<Object> {
 
     @Override
-    protected void updateItem(String item, boolean empty) {
+    protected void updateItem(Object item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty) {
+        if (empty || item == null) {
             setText(null);
             setGraphic(null);
         } else {
-            setText(getItem() == null ? "" : getItem().toString());
-            setGraphic(getTreeItem().getGraphic());
+            setText(getDisplayText(item));
+            setGraphic(getDisplayGraphic(item));
             setContextMenu(((AbstractTreeItem) getTreeItem()).getContextMenu());
         }
+    }
+
+    private String getDisplayText(Object item) {
+        if (item instanceof CampaignFile) {
+            return ((CampaignFile) item).getNameTitle();
+        }
+        return null;
+    }
+
+    private Node getDisplayGraphic(Object item) {
+        if (item instanceof CampaignFile) {
+            return getTreeItem().getGraphic();
+        }
+        return null;
     }
 
 }

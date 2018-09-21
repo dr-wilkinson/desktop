@@ -33,7 +33,7 @@ public class ApplicationEvent extends AbstractEvent implements Event {
 
     public enum Type {
 
-        Quit;
+        Quit, Cleanup;
 
     }
 

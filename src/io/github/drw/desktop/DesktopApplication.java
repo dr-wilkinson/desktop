@@ -57,7 +57,6 @@ public class DesktopApplication extends Application implements Listener {
     @Override
     public void stop() throws Exception {
         super.stop();
-        // TODO : Automatic save of open campaigns
     }
 
     @Override
@@ -65,6 +64,7 @@ public class DesktopApplication extends Application implements Listener {
         if (event instanceof ApplicationEvent) {
             event.addListener(this);
             if (event.getType().equals(ApplicationEvent.Type.Quit)) {
+                Eventbus.fire(new ApplicationEvent(ApplicationEvent.Type.Cleanup, this, null));
                 stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
                 event.consume(this);
             }
