@@ -318,6 +318,11 @@ public class TreeController implements Initializable, Listener {
 
     private void displayRenameDialog() {
         CampaignFile oldCampaignFile = (CampaignFile) treeView.getSelectionModel().getSelectedItem().getValue();
+        if (!oldCampaignFile.isSaved()) {
+            Eventbus.fire(new StatusEvent(StatusEvent.Type.Update, this, "Campaign " + oldCampaignFile.getNameTitle() + " must be saved before being renamed."));
+            displaySaveFileDialog();
+            return;
+        }
         String oldName = oldCampaignFile.getNameTitle();
         TextInputDialog textInputDialog = new TextInputDialog(oldCampaignFile.getNameTitle());
         textInputDialog.setHeaderText("Rename Campaign");
