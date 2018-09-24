@@ -98,17 +98,23 @@ public class TreeController implements Initializable, Listener {
                 displayRenameDialog();
                 event.consume(this);
             }
+            if (event.getType().equals(CampaignEvent.Type.Close)) {
+                closeCampaignFile();
+                event.consume(this);
+            }
         }
         if (event instanceof AdventureEvent) {
             event.addListener(this);
             if (event.getType().equals(AdventureEvent.Type.New)) {
                 CampaignTreeItem<CampaignFile> selectedTreeItem = (CampaignTreeItem<CampaignFile>) treeView.getSelectionModel().getSelectedItem();
-                Campaign campaign = (Campaign) ((CampaignFile) selectedTreeItem.getValue()).getCampaign();
+                CampaignFile campaignFile = (CampaignFile) selectedTreeItem.getValue();
+                Campaign campaign = campaignFile.getCampaign();
                 if (campaign != null) {
                     String adventureTitle = "Untitled";
                     campaign.addAdventure(new Adventure(adventureTitle));
                     AdventureTreeItem<String> adventureTreeItem = new AdventureTreeItem<>(adventureTitle);
                     selectedTreeItem.getChildren().add(adventureTreeItem);
+                    campaignFile.setSaved(false);
                 }
             }
         }
@@ -152,6 +158,31 @@ public class TreeController implements Initializable, Listener {
             }
         });
         treeContextMenu.getItems().add(openMenuItem);
+    }
+
+    private void closeCampaignFile() {
+        CampaignTreeItem campaignTreeItem = (CampaignTreeItem) treeView.getSelectionModel().getSelectedItem();
+        CampaignFile campaignFile = (CampaignFile) campaignTreeItem.getValue();
+        File file = campaignFile.getFile();
+        Campaign campaign = campaignFile.getCampaign();
+        if (file != null && campaignFile.isSaved()) {
+            treeView.getRoot().getChildren().remove(campaignTreeItem);
+            Eventbus.fire(new StatusEvent(StatusEvent.Type.Update, this, campaignFile.getNameTitle() + " closed."));
+            return;
+        }
+        if (file != null && !campaignFile.isSaved()) {
+            serialiseCampaign(campaign, file);
+            campaignFile.setSaved(true);
+            treeView.getRoot().getChildren().remove(campaignTreeItem);
+            Eventbus.fire(new StatusEvent(StatusEvent.Type.Update, this, campaignFile.getNameTitle() + "saved and closed."));
+            return;
+        }
+        if (file == null) {
+            displaySaveFileDialog();
+            treeView.getRoot().getChildren().remove(campaignTreeItem);
+            Eventbus.fire(new StatusEvent(StatusEvent.Type.Update, this, campaignFile.getNameTitle() + " closed."));
+            return;
+        }
     }
 
     private void serialiseCampaign(Campaign campaign, File file) {

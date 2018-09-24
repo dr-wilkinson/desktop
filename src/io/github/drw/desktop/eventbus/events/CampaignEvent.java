@@ -33,7 +33,7 @@ public class CampaignEvent extends AbstractEvent implements Event {
 
     public enum Type {
 
-        Open, Save, Rename;
+        Open, Save, Rename, Close;
 
     }
 

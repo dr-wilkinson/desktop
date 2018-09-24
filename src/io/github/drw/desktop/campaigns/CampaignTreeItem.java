@@ -54,6 +54,14 @@ public class CampaignTreeItem<String> extends AbstractTreeItem {
             }
         });
         contextMenu.getItems().add(saveMenuItem);
+        MenuItem closeMenuItem = new MenuItem("Close");
+        closeMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Eventbus.fire(new CampaignEvent(CampaignEvent.Type.Close, CampaignTreeItem.this, null));
+            }
+        });
+        contextMenu.getItems().add(closeMenuItem);
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
         contextMenu.getItems().add(separatorMenuItem);
         MenuItem newAdventureMenuItem = new MenuItem("New Adventure");
